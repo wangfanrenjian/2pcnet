@@ -1,21 +1,32 @@
-# 📦 Streamlit App Starter Kit 
+# yolov5-streamlit
+
+Deploy [YOLOv5](https://github.com/ultralytics/yolov5/releases/tag/v5.0) detection with [Streamlit](https://github.com/streamlit/streamlit)
+
+博文地址： <https://xugaoxiang.com/2021/08/27/yolov5-streamlit/>
+
+# 线上体验
+
+直接访问 <https://share.streamlit.io/xugaoxiang/yolov5-streamlit/main/main.py>
+
+# 安装依赖
+
 ```
-⬆️ (Replace above with your app's name)
+# 本地安装的话，请将opencv-python-headless改为opencv-python
+pip install -r requirements.txt
 ```
 
-Description of the app ...
+如果有`GPU`的话，将`torch`替换成`gpu`版本可加速检测
 
-## Demo App
+# 运行项目
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://ml-model-builder-template.streamlit.app/)
+```
+streamlit run main.py
+```
 
-## Section Heading
+**图片检测**
 
-This is filler text, please replace this with text for this section.
+![streamlit yolov5 image detection](data/images/image.png)
 
-## Further Reading
+**视频检测**
 
-This is filler text, please replace this with a explanatory text about further relevant resources for this repo
-- Resource 1
-- Resource 2
-- Resource 3
+![streamlit yolov5 video detection](data/images/video.png)
