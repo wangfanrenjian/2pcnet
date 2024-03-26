@@ -31,7 +31,7 @@ def get_detection_folder():
 if __name__ == '__main__':
 
     st.title('行人车辆检测')
-    st.subheader('Faster-RCNN | Mean Teacher',style='color:grey')
+    st.subheader('Faster-RCNN | Mean Teacher')
     parser = argparse.ArgumentParser()
     parser.add_argument('--weights', nargs='+', type=str,
                         default='weights/yolov5s.pt', help='model.pt path(s)')
