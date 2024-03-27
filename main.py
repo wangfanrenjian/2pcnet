@@ -70,7 +70,7 @@ if __name__ == '__main__':
     opt = parser.parse_args()
     print(opt)
 
-    source = ("图片检测", "视频检测")
+    source = ("行人车辆检测", "模型性能分析")
     source_index = st.sidebar.selectbox("选择输入", range(
         len(source)), format_func=lambda x: source[x])
 
@@ -87,16 +87,7 @@ if __name__ == '__main__':
         else:
             is_valid = False
     else:
-        uploaded_file = st.sidebar.file_uploader("上传视频", type=['mp4'])
-        if uploaded_file is not None:
-            is_valid = True
-            with st.spinner(text='资源加载中...'):
-                st.sidebar.video(uploaded_file)
-                with open(os.path.join("data", "videos", uploaded_file.name), "wb") as f:
-                    f.write(uploaded_file.getbuffer())
-                opt.source = f'data/videos/{uploaded_file.name}'
-        else:
-            is_valid = False
+        #TODO：模型性能分析
 
     if is_valid:
         print('valid')
@@ -111,8 +102,4 @@ if __name__ == '__main__':
 
                     st.balloons()
             else:
-                with st.spinner(text='Preparing Video'):
-                    for vid in os.listdir(get_detection_folder()):
-                        st.video(str(Path(f'{get_detection_folder()}') / vid))
-
-                    st.balloons()
+                # TODO：模型性能分析
