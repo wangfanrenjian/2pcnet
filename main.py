@@ -88,7 +88,7 @@ if __name__ == '__main__':
             is_valid = False
     else:
         #TODO：模型性能分析
-
+        pass
     if is_valid:
         print('valid')
         if st.button('开始检测'):
@@ -103,3 +103,4 @@ if __name__ == '__main__':
                     st.balloons()
             else:
                 # TODO：模型性能分析
+                pass
