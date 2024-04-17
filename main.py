@@ -8,26 +8,6 @@ import sys
 import argparse
 from PIL import Image
 
-import torch, torchvision
-
-# Some basic setup:
-# Setup detectron2 logger
-import detectron2
-from detectron2.utils.logger import setup_logger
-setup_logger()
-
-# import some common libraries
-import numpy as np
-import os, json, cv2, random
-
-
-# import some common detectron2 utilities
-from detectron2 import model_zoo
-from detectron2.engine import DefaultPredictor
-from detectron2.config import get_cfg
-from detectron2.utils.visualizer import Visualizer
-from detectron2.data import MetadataCatalog, DatasetCatalog
-
 
 def get_subdirs(b='.'):
     '''
@@ -52,13 +32,43 @@ if __name__ == '__main__':
 
     st.title('行人车辆检测')
     st.subheader('Faster-RCNN | Mean Teacher')
-    #改配置
-    cfg = get_cfg()
-    # add project-specific config (e.g., TensorMask) here if you're not running a model in detectron2's core library
-    cfg.merge_from_file(model_zoo.get_config_file("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml"))
-    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5  # set threshold for this model
-    # Find a model from detectron2's model zoo. You can use the https://dl.fbaipublicfiles... url as well
-    cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--weights', nargs='+', type=str,
+                        default='weights/yolov5s.pt', help='model.pt path(s)')
+    parser.add_argument('--source', type=str,
+                        default='data/images', help='source')
+    parser.add_argument('--img-size', type=int, default=640,
+                        help='inference size (pixels)')
+    parser.add_argument('--conf-thres', type=float,
+                        default=0.35, help='object confidence threshold')
+    parser.add_argument('--iou-thres', type=float,
+                        default=0.45, help='IOU threshold for NMS')
+    parser.add_argument('--device', default='',
+                        help='cuda device, i.e. 0 or 0,1,2,3 or cpu')
+    parser.add_argument('--view-img', action='store_true',
+                        help='display results')
+    parser.add_argument('--save-txt', action='store_true',
+                        help='save results to *.txt')
+    parser.add_argument('--save-conf', action='store_true',
+                        help='save confidences in --save-txt labels')
+    parser.add_argument('--nosave', action='store_true',
+                        help='do not save images/videos')
+    parser.add_argument('--classes', nargs='+', type=int,
+                        help='filter by class: --class 0, or --class 0 2 3')
+    parser.add_argument('--agnostic-nms', action='store_true',
+                        help='class-agnostic NMS')
+    parser.add_argument('--augment', action='store_true',
+                        help='augmented inference')
+    parser.add_argument('--update', action='store_true',
+                        help='update all models')
+    parser.add_argument('--project', default='runs/detect',
+                        help='save results to project/name')
+    parser.add_argument('--name', default='exp',
+                        help='save results to project/name')
+    parser.add_argument('--exist-ok', action='store_true',
+                        help='existing project/name ok, do not increment')
+    opt = parser.parse_args()
+    print(opt)
 
     source = ("行人车辆检测", "模型性能分析")
     source_index = st.sidebar.selectbox("选择输入", range(
@@ -73,7 +83,7 @@ if __name__ == '__main__':
                 st.sidebar.image(uploaded_file)
                 picture = Image.open(uploaded_file)
                 picture = picture.save(f'data/images/{uploaded_file.name}')
-                #opt.source = f'data/images/{uploaded_file.name}'
+                opt.source = f'data/images/{uploaded_file.name}'
         else:
             is_valid = False
     else:
@@ -82,15 +92,14 @@ if __name__ == '__main__':
     if is_valid:
         print('valid')
         if st.button('开始检测'):
-            predictor = DefaultPredictor(cfg)
-            outputs = predictor(picture)
-            #detect(opt)
-            v = Visualizer(picture[:, :, ::-1], MetadataCatalog.get(cfg.DATASETS.TRAIN[0]), scale=1.2)
-            out = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-            cv2.imwrite('./output.jpg', out.get_image()[:, :, ::-1])
+
+            detect(opt)
+
             if source_index == 0:
                 with st.spinner(text='Preparing Images'):
-                    st.image(str("./output.jpg"))
+                    for img in os.listdir(get_detection_folder()):
+                        st.image(str(Path(f'{get_detection_folder()}') / img))
+
                     #st.balloons()
             else:
                 # TODO：模型性能分析
