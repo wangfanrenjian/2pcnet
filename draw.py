@@ -24,7 +24,7 @@ def create_comparison_table(data):
                    fill_color='lavender',
                    align='left'))
     ])
-    fig.update_layout(width=800, height=500)  # 设置表格的默认大小
+    fig.update_layout(width=800, height=700)  # 设置表格的默认大小
     fig.update_layout(autosize=True)  # 设置表格的列宽度自动调整
     return fig
 
