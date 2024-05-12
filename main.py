@@ -31,7 +31,7 @@ def get_detection_folder():
 
 def accurary():
     # 示例数据文件路径
-    accuracy_file = "accuracy.xlsx"
+    accuracy_file = "metrics.xlsx"
     # loss_file = "loss_data.xlsx"
     # map_file = "map_data.xlsx"
     # comparison_file = "comparison_data.xlsx"
@@ -43,8 +43,8 @@ def accurary():
     # comparison_data = read_data(comparison_file)
 
     # 创建动态折线图
-    accuracy_chart = create_line_chart(accuracy_data['Iter'], [accuracy_data['Model']],
-                                       "Accuracy Trend", "Epoch", "Accuracy")
+    accuracy_chart = create_line_chart(accuracy_data['Iteration'], [accuracy_data['Accuracy']],
+                                       "准确率变化曲线", "Iteration", "Accuracy")
     return accuracy_chart
 
 def loss():
@@ -52,7 +52,21 @@ def loss():
 
 
 def mAP():
-    pass
+    accuracy_file = "mAP.xlsx"
+    # loss_file = "loss_data.xlsx"
+    # map_file = "map_data.xlsx"
+    # comparison_file = "comparison_data.xlsx"
+
+    # 读取数据
+    accuracy_data = read_data(accuracy_file)
+    # loss_data = read_data(loss_file)
+    # map_data = read_data(map_file)
+    # comparison_data = read_data(comparison_file)
+
+    # 创建动态折线图
+    accuracy_chart = create_line_chart(accuracy_data['x'], [accuracy_data['mAP1'],accuracy_data['mAP2'],accuracy_data['mAP3']],
+                                       "mAP变化曲线", "Iteration", "mAP")
+    return accuracy_chart
 
 
 def mAPl():
@@ -160,3 +174,5 @@ if __name__ == '__main__':
             else:
                 # TODO：模型性能分析
                 pass
+    else:
+        pass
