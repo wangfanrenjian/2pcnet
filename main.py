@@ -180,7 +180,15 @@ if __name__ == '__main__':
             st.plotly_chart(fig)
         else :
             fig=bijiao()
-            st.write(fig,width=1500, height=700)
+            st.write("""
+                <style>
+                    table {
+                        width: 800px;
+                        height: 700px;
+                    }
+                </style>
+            """, unsafe_allow_html=True)
+            st.write(fig)
             
     if is_valid:
         print('valid')
