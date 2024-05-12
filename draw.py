@@ -1,7 +1,6 @@
 import pandas as pd
 import plotly.graph_objs as go
 from plotly.subplots import make_subplots
-import plotly
 
 # 读取数据文件
 def read_data(file_path):
