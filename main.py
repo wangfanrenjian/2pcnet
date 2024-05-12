@@ -60,7 +60,7 @@ def loss():
     # comparison_data = read_data(comparison_file)
 
     # 创建动态折线图
-    accuracy_chart = create_line_chart(accuracy_data['Iteration'], [accuracy_data['TotalLoss']],
+    accuracy_chart = create_line_chart(accuracy_data['Iteration'][121:], [accuracy_data['TotalLoss'][121:]],
                                        "准确率变化曲线", "Iteration", "TotalLoss")
     return accuracy_chart
 
