@@ -64,7 +64,8 @@ def mAP():
     # comparison_data = read_data(comparison_file)
 
     # 创建动态折线图
-    accuracy_chart = create_line_chart(accuracy_data['x'], [accuracy_data['mAP1'],accuracy_data['mAP2'],accuracy_data['mAP3']],
+    accuracy_chart = create_line_chart(accuracy_data['x'], [accuracy_data['MT'],
+                                                            accuracy_data['MT+T'],accuracy_data['MT+T+SS']],
                                        "mAP变化曲线", "Iteration", "mAP")
     return accuracy_chart
 
@@ -153,7 +154,7 @@ if __name__ == '__main__':
             st.plotly_chart(fig)
         elif source2_index==1:
             loss()
-            
+
         elif source2_index==2:
             fig=mAP()
             mAPl()
