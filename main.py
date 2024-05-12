@@ -140,6 +140,7 @@ if __name__ == '__main__':
         else:
             is_valid = False
     else:
+        is_valid = True
         #TODO：模型性能分析
         source2=("准确率曲线","损失值曲线","mAP曲线","不同模型mAP比较")
         source2_index = st.sidebar.selectbox("性能指标", range(
@@ -152,10 +153,12 @@ if __name__ == '__main__':
             st.plotly_chart(fig)
         elif source2_index==1:
             loss()
+            
         elif source2_index==2:
-            mAP()
+            fig=mAP()
             mAPl()
             mAPs()
+            st.plotly_chart(fig)
         else :
             bijiao()
             
