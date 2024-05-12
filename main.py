@@ -48,7 +48,21 @@ def accurary():
     return accuracy_chart
 
 def loss():
-    pass
+    accuracy_file = "metrics.xlsx"
+    # loss_file = "loss_data.xlsx"
+    # map_file = "map_data.xlsx"
+    # comparison_file = "comparison_data.xlsx"
+
+    # 读取数据
+    accuracy_data = read_data(accuracy_file)
+    # loss_data = read_data(loss_file)
+    # map_data = read_data(map_file)
+    # comparison_data = read_data(comparison_file)
+
+    # 创建动态折线图
+    accuracy_chart = create_line_chart(accuracy_data['Iteration'], [accuracy_data['TotalLoss']],
+                                       "准确率变化曲线", "Iteration", "TotalLoss")
+    return accuracy_chart
 
 
 def mAP():
@@ -153,7 +167,8 @@ if __name__ == '__main__':
             ## st.markdown("<iframe src='accuracy_chart.html' width='1000' height='600'></iframe>", unsafe_allow_html=True)
             st.plotly_chart(fig)
         elif source2_index==1:
-            loss()
+            fig=loss()
+            st.plotly_chart(fig)
 
         elif source2_index==2:
             fig=mAP()
