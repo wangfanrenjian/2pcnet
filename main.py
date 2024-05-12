@@ -9,6 +9,7 @@ import argparse
 from PIL import Image
 from draw import read_data
 from draw import create_line_chart
+from draw import create_comparison_table
 
 
 def get_subdirs(b='.'):
@@ -93,7 +94,9 @@ def mAPs():
 
 
 def bijiao():
-    pass
+    file=read_data("bijiao.xlsx")
+    chart=create_comparison_table(file)
+    return chart
 
 
 if __name__ == '__main__':
@@ -176,7 +179,8 @@ if __name__ == '__main__':
             mAPs()
             st.plotly_chart(fig)
         else :
-            bijiao()
+            fig=bijiao()
+            st.plotly_chart(fig)
             
     if is_valid:
         print('valid')
