@@ -26,7 +26,7 @@ def create_comparison_table(data):
     ])
     fig.update_layout(width=800, height=700)  # 设置表格的默认大小
     fig.update_layout(autosize=True)  # 设置表格的列宽度自动调整
-    fig.update_layout(column_width='auto', row_height='auto', column_order='explicit', row_order='explicit')
+    # fig.update_layout(column_width='auto', row_height='auto', column_order='explicit', row_order='explicit')
     return fig
 
 # 示例数据文件路径
