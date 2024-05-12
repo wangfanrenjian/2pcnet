@@ -94,8 +94,8 @@ def mAPs():
 
 
 def bijiao():
-    file=read_data("bijiao.xlsx")
-    chart=create_comparison_table(file)
+    chart=read_data("bijiao.xlsx")
+    # chart=create_comparison_table(file)
     return chart
 
 
@@ -180,7 +180,7 @@ if __name__ == '__main__':
             st.plotly_chart(fig)
         else :
             fig=bijiao()
-            st.plotly_chart(fig)
+            st.write(fig)
             
     if is_valid:
         print('valid')
