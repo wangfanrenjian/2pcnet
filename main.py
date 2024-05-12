@@ -180,7 +180,7 @@ if __name__ == '__main__':
             st.plotly_chart(fig)
         else :
             fig=bijiao()
-            st.write(fig)
+            st.write(fig,width=800, height=700)
             
     if is_valid:
         print('valid')
