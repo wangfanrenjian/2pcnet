@@ -9,6 +9,7 @@ import argparse
 from PIL import Image
 
 
+
 def get_subdirs(b='.'):
     '''
         Returns all sub-directories in a specific Path
@@ -26,6 +27,28 @@ def get_detection_folder():
         Returns the latest folder in a runs\detect
     '''
     return max(get_subdirs(os.path.join('runs', 'detect')), key=os.path.getmtime)
+
+def accurary():
+    pass
+
+def loss():
+    pass
+
+
+def mAP():
+    pass
+
+
+def mAPl():
+    pass
+
+
+def mAPs():
+    pass
+
+
+def bijiao():
+    pass
 
 
 if __name__ == '__main__':
@@ -71,7 +94,7 @@ if __name__ == '__main__':
     print(opt)
 
     source = ("行人车辆检测", "模型性能分析")
-    source_index = st.sidebar.selectbox("选择输入", range(
+    source_index = st.sidebar.selectbox("模块选择", range(
         len(source)), format_func=lambda x: source[x])
 
     if source_index == 0:
@@ -88,7 +111,23 @@ if __name__ == '__main__':
             is_valid = False
     else:
         #TODO：模型性能分析
-        pass
+        source2=("准确率曲线","损失值曲线","mAP曲线","不同模型mAP比较")
+        source2_index = st.sidebar.selectbox("性能指标", range(
+            len(source2)), format_func=lambda x: source2[x])
+        if source2_index==0:
+            accurary()
+            # 展示 accuracy_chart.html
+            st.markdown("## Accuracy Chart")
+            st.markdown("<iframe src='accuracy_chart.html' width='1000' height='600'></iframe>", unsafe_allow_html=True)
+        elif source2_index==1:
+            loss()
+        elif source2_index==2:
+            mAP()
+            mAPl()
+            mAPs()
+        else :
+            bijiao()
+            
     if is_valid:
         print('valid')
         if st.button('开始检测'):
