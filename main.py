@@ -140,7 +140,7 @@ if __name__ == '__main__':
         else:
             is_valid = False
     else:
-        is_valid = True
+        is_valid = False
         #TODO：模型性能分析
         source2=("准确率曲线","损失值曲线","mAP曲线","不同模型mAP比较")
         source2_index = st.sidebar.selectbox("性能指标", range(
