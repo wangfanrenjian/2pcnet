@@ -7,7 +7,8 @@ import os
 import sys
 import argparse
 from PIL import Image
-
+from draw import read_data
+from draw import create_line_chart
 
 
 def get_subdirs(b='.'):
@@ -29,7 +30,22 @@ def get_detection_folder():
     return max(get_subdirs(os.path.join('runs', 'detect')), key=os.path.getmtime)
 
 def accurary():
-    pass
+    # 示例数据文件路径
+    accuracy_file = "accuracy.xlsx"
+    # loss_file = "loss_data.xlsx"
+    # map_file = "map_data.xlsx"
+    # comparison_file = "comparison_data.xlsx"
+
+    # 读取数据
+    accuracy_data = read_data(accuracy_file)
+    # loss_data = read_data(loss_file)
+    # map_data = read_data(map_file)
+    # comparison_data = read_data(comparison_file)
+
+    # 创建动态折线图
+    accuracy_chart = create_line_chart(accuracy_data['Iter'], [accuracy_data['Model']],
+                                       "Accuracy Trend", "Epoch", "Accuracy")
+    return accuracy_chart
 
 def loss():
     pass
@@ -115,10 +131,11 @@ if __name__ == '__main__':
         source2_index = st.sidebar.selectbox("性能指标", range(
             len(source2)), format_func=lambda x: source2[x])
         if source2_index==0:
-            accurary()
+            fig=accurary()
             # 展示 accuracy_chart.html
-            st.markdown("## Accuracy Chart")
-            st.markdown("<iframe src='accuracy_chart.html' width='1000' height='600'></iframe>", unsafe_allow_html=True)
+            ## st.markdown("## Accuracy Chart")
+            ## st.markdown("<iframe src='accuracy_chart.html' width='1000' height='600'></iframe>", unsafe_allow_html=True)
+            st.plotly_chart(fig)
         elif source2_index==1:
             loss()
         elif source2_index==2:
