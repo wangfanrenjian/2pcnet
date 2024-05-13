@@ -148,7 +148,7 @@ if __name__ == '__main__':
     if source_index == 0:
         uploaded_files = st.sidebar.file_uploader(
             "上传图片", type=['png', 'jpeg', 'jpg'], accept_multiple_files=True)
-        if uploaded_files is not None:
+        if uploaded_files:
             is_valid = True
             image_paths = [f"图像 {i + 1} 路径: {file.name}" for i,file in enumerate(uploaded_files)]
             selected_image = st.sidebar.selectbox("选择要显示的图像路径", image_paths)
