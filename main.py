@@ -155,10 +155,11 @@ if __name__ == '__main__':
             if selected_image:
                 is_select=True
                 selected_file = next(file for file in uploaded_files if file.name == selected_image)
-                st.sidebar.image(selected_file)
-                picture = Image.open(selected_file)
-                picture = picture.save(f'data/images/{selected_file.name}')
-                opt.source = f'data/images/{selected_file.name}'
+                if selected_file:
+                    st.sidebar.image(selected_file)
+                    picture = Image.open(selected_file)
+                    picture = picture.save(f'data/images/{selected_file.name}')
+                    opt.source = f'data/images/{selected_file.name}'
             else:
                 picture = Image.open(uploaded_files[0])
                 picture = picture.save(f'data/images/{uploaded_files[0].name}')
@@ -192,12 +193,12 @@ if __name__ == '__main__':
             
     if is_valid:
         print('valid')
-        if st.button('开始检测'): 
+        if st.button('开始检测'):
             detect(opt)
             with st.spinner(text='Preparing Images'):
                 for img in os.listdir(get_detection_folder()):
                     st.image(str(Path(f'{get_detection_folder()}') / img))
-            
+
 
                     #st.balloons()
     else:
