@@ -9,7 +9,9 @@ import argparse
 from PIL import Image
 from draw import read_data
 from draw import create_line_chart
+import plotly.graph_objects as go
 from draw import create_comparison_table
+import plotly.express as px
 
 
 def get_subdirs(b='.'):
@@ -97,6 +99,29 @@ def bijiao():
     chart=read_data("bijiao.xlsx")
     # chart=create_comparison_table(file)
     return chart
+def countcls():
+    # 读取xlsx文件
+    df = read_data('class.xlsx')
+    # 统计每个class的总数
+    class_counts = df['class'].value_counts()
+    # 统计不同image种类数量
+    image_counts = df['image'].nunique()
+    # 确定纵坐标数据
+    # 确定纵坐标数据
+    if image_counts <= 3:
+        # 如果image总数的种类小于等于3，则以每个图像的每个class总数为纵坐标
+        grouped_data = df.groupby(['class', 'image']).size().unstack(fill_value=0)
+        # 转换为长格式以便于绘图
+        long_format = grouped_data.reset_index().melt(id_vars='class', var_name='image', value_name='count')
+        # 使用Plotly绘制柱状图
+        fig = px.bar(long_format, x='class', y='count', color='image', barmode='group')
+        fig.update_layout(title='Class Counts for Each Image', xaxis_title='Class', yaxis_title='Count')
+    else:
+        # 如果image总数的种类大于3，则统计所有图像的每个class总数为纵坐标
+        fig = px.bar(x=class_counts.index, y=class_counts.values)
+        fig.update_layout(title='Total Class Counts', xaxis_title='Class', yaxis_title='Total Count')
+
+    fig.show()
 
 
 if __name__ == '__main__':
@@ -199,8 +224,10 @@ if __name__ == '__main__':
             with st.spinner(text='Preparing Images'):
                 for img in os.listdir(get_detection_folder()):
                     st.image(str(Path(f'{get_detection_folder()}') / img))
+            if st.button('统计类别'):
+                # 读取保存的文本文件，获取类别信息
+                countcls()
 
-
-                    #st.balloons()
+            #st.balloons()
     else:
         pass
