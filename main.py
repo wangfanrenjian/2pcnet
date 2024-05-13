@@ -146,15 +146,23 @@ if __name__ == '__main__':
         len(source)), format_func=lambda x: source[x])
 
     if source_index == 0:
-        uploaded_file = st.sidebar.file_uploader(
-            "上传图片", type=['png', 'jpeg', 'jpg'])
-        if uploaded_file is not None:
+        uploaded_files = st.sidebar.file_uploader(
+            "上传图片", type=['png', 'jpeg', 'jpg'], accept_multiple_files=True)
+        if uploaded_files is not None:
             is_valid = True
-            with st.spinner(text='资源加载中...'):
-                st.sidebar.image(uploaded_file)
-                picture = Image.open(uploaded_file)
-                picture = picture.save(f'data/images/{uploaded_file.name}')
-                opt.source = f'data/images/{uploaded_file.name}'
+            image_paths = [f"图像 {i + 1} 路径: {file.name}" for i,file in enumerate(uploaded_files)]
+            selected_image = st.sidebar.selectbox("选择要显示的图像路径", image_paths)
+            if selected_image:
+                is_select=True
+                selected_file = next(file for file in uploaded_files if file.name == selected_image)
+                st.sidebar.image(selected_file)
+                picture = Image.open(selected_file)
+                picture = picture.save(f'data/images/{selected_file.name}')
+                opt.source = f'data/images/{selected_file.name}'
+            else:
+                picture = Image.open(uploaded_files[0])
+                picture = picture.save(f'data/images/{uploaded_files[0].name}')
+                opt.source = f'data/images/{uploaded_files[0].name}'
         else:
             is_valid = False
     else:
@@ -180,22 +188,17 @@ if __name__ == '__main__':
             st.plotly_chart(fig)
         else :
             fig=bijiao()
-            st.write(fig)
+            st.write(fig,width=800, height=700)
             
     if is_valid:
         print('valid')
-        if st.button('开始检测'):
-
+        if st.button('开始检测'): 
             detect(opt)
-
-            if source_index == 0:
-                with st.spinner(text='Preparing Images'):
-                    for img in os.listdir(get_detection_folder()):
-                        st.image(str(Path(f'{get_detection_folder()}') / img))
+            with st.spinner(text='Preparing Images'):
+                for img in os.listdir(get_detection_folder()):
+                    st.image(str(Path(f'{get_detection_folder()}') / img))
+            
 
                     #st.balloons()
-            else:
-                # TODO：模型性能分析
-                pass
     else:
         pass
