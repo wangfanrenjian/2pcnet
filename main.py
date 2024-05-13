@@ -220,14 +220,18 @@ if __name__ == '__main__':
     if is_valid:
         print('valid')
         if st.button('开始检测'):
+            is_detect=True
             detect(opt)
             with st.spinner(text='Preparing Images'):
                 for img in os.listdir(get_detection_folder()):
                     st.image(str(Path(f'{get_detection_folder()}') / img))
+        if is_detect:
             if st.button('统计类别'):
                 # 读取保存的文本文件，获取类别信息
-                fig=countcls()
-                st.plotly_chart(fig)
+                fig1=countcls()
+                st.plotly_chart(fig1)
+                fig2=mAP()
+                st.plotly_chart(fig2)
             #st.balloons()
     else:
         pass
