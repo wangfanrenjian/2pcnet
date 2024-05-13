@@ -152,9 +152,10 @@ if __name__ == '__main__':
             is_valid = True
             image_paths = [f"图像 {i + 1} 路径: {file.name}" for i,file in enumerate(uploaded_files)]
             selected_image = st.sidebar.selectbox("选择要显示的图像路径", image_paths)
+            st.sidebar.write(selected_image)
             if selected_image:
                 is_select=True
-                selected_file = next(file for file in uploaded_files if file.name == selected_image)
+                selected_file = next(file for file in uploaded_files if file.name == selected_image.split("路径: ")[1])
                 if selected_file:
                     st.sidebar.image(selected_file)
                     picture = Image.open(selected_file)
