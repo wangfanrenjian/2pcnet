@@ -216,7 +216,7 @@ if __name__ == '__main__':
         else :
             fig=bijiao()
             st.write(fig,width=800, height=700)
-            
+    is_detect = False
     if is_valid:
         print('valid')
         if st.button('开始检测'):
