@@ -228,6 +228,7 @@ if __name__ == '__main__':
         if is_detect:
             if st.button('统计类别'):
                 # 读取保存的文本文件，获取类别信息
+                st.write('11111111111111111')
                 fig1=countcls()
                 st.plotly_chart(fig1)
                 fig2=mAP()
