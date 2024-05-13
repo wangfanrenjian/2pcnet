@@ -121,7 +121,7 @@ def countcls():
         fig = px.bar(x=class_counts.index, y=class_counts.values)
         fig.update_layout(title='Total Class Counts', xaxis_title='Class', yaxis_title='Total Count')
 
-    fig.show()
+    return fig
 
 
 if __name__ == '__main__':
@@ -226,8 +226,8 @@ if __name__ == '__main__':
                     st.image(str(Path(f'{get_detection_folder()}') / img))
             if st.button('统计类别'):
                 # 读取保存的文本文件，获取类别信息
-                countcls()
-
+                fig=countcls()
+                st.plotly_chart(fig)
             #st.balloons()
     else:
         pass
