@@ -216,17 +216,17 @@ if __name__ == '__main__':
         else :
             fig=bijiao()
             st.write(fig,width=800, height=700)
-    is_detect = False
+    st.session_state['is_detect'] = False
     if is_valid:
         print('valid')
         if st.button('开始检测'):
-            is_detect=True
+            st.session_state['is_detect'] = True
             detect(opt)
             with st.spinner(text='Preparing Images'):
                 for img in os.listdir(get_detection_folder()):
                     st.image(str(Path(f'{get_detection_folder()}') / img))
-        elif st.button('统计类别'):
-                if is_detect:
+        if st.button('统计类别'):
+                if st.session_state['is_detect']:
                     # 读取保存的文本文件，获取类别信息
                     st.write('11111111111111111')
                     fig1=countcls()
