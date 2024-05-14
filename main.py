@@ -33,53 +33,22 @@ def get_detection_folder():
     return max(get_subdirs(os.path.join('runs', 'detect')), key=os.path.getmtime)
 
 def accurary():
-    # 示例数据文件路径
     accuracy_file = "metrics.xlsx"
-    # loss_file = "loss_data.xlsx"
-    # map_file = "map_data.xlsx"
-    # comparison_file = "comparison_data.xlsx"
-
-    # 读取数据
     accuracy_data = read_data(accuracy_file)
-    # loss_data = read_data(loss_file)
-    # map_data = read_data(map_file)
-    # comparison_data = read_data(comparison_file)
-
-    # 创建动态折线图
     accuracy_chart = create_line_chart(accuracy_data['Iteration'], [accuracy_data['Accuracy']],
                                        "准确率变化曲线", "Iteration", "Accuracy")
     return accuracy_chart
-
 def loss():
     accuracy_file = "metrics.xlsx"
-    # loss_file = "loss_data.xlsx"
-    # map_file = "map_data.xlsx"
-    # comparison_file = "comparison_data.xlsx"
-
-    # 读取数据
     accuracy_data = read_data(accuracy_file)
-    # loss_data = read_data(loss_file)
-    # map_data = read_data(map_file)
-    # comparison_data = read_data(comparison_file)
-
     # 创建动态折线图
     accuracy_chart = create_line_chart(accuracy_data['Iteration'][121:], [accuracy_data['TotalLoss'][121:]],
-                                       "准确率变化曲线", "Iteration", "TotalLoss")
+                                       "损失值变化曲线", "Iteration", "TotalLoss")
     return accuracy_chart
-
-
 def mAP():
     accuracy_file = "mAP.xlsx"
-    # loss_file = "loss_data.xlsx"
-    # map_file = "map_data.xlsx"
-    # comparison_file = "comparison_data.xlsx"
-
     # 读取数据
     accuracy_data = read_data(accuracy_file)
-    # loss_data = read_data(loss_file)
-    # map_data = read_data(map_file)
-    # comparison_data = read_data(comparison_file)
-
     # 创建动态折线图
     accuracy_chart = create_line_chart(accuracy_data['x'], [accuracy_data['MT'],
                                                             accuracy_data['MT+T'],accuracy_data['MT+T+SS']],
@@ -88,11 +57,25 @@ def mAP():
 
 
 def mAPl():
-    pass
+    accuracy_file = "mAPl.xlsx"
+    # 读取数据
+    accuracy_data = read_data(accuracy_file)
+    # 创建动态折线图
+    accuracy_chart = create_line_chart(accuracy_data['x'], [accuracy_data['MT'],
+                                                            accuracy_data['MT+T'], accuracy_data['MT+T+SS']],
+                                       "mAPl变化曲线", "Iteration", "mAP")
+    return accuracy_chart
 
 
 def mAPs():
-    pass
+    accuracy_file = "mAPs.xlsx"
+    # 读取数据
+    accuracy_data = read_data(accuracy_file)
+    # 创建动态折线图
+    accuracy_chart = create_line_chart(accuracy_data['x'], [accuracy_data['MT'],
+                                                            accuracy_data['MT+T'], accuracy_data['MT+T+SS']],
+                                       "mAPs变化曲线", "Iteration", "mAP")
+    return accuracy_chart
 
 
 def bijiao():
@@ -100,26 +83,22 @@ def bijiao():
     # chart=create_comparison_table(file)
     return chart
 def countcls():
-    # 读取xlsx文件
     df = read_data('class.xlsx')
     # 统计每个class的总数
     class_counts = df['class'].value_counts()
     # 统计不同image种类数量
     image_counts = df['image'].nunique()
-    # 确定纵坐标数据
-    # 确定纵坐标数据
     if image_counts <= 3:
         # 如果image总数的种类小于等于3，则以每个图像的每个class总数为纵坐标
         grouped_data = df.groupby(['class', 'image']).size().unstack(fill_value=0)
-        # 转换为长格式以便于绘图
         long_format = grouped_data.reset_index().melt(id_vars='class', var_name='image', value_name='count')
         # 使用Plotly绘制柱状图
         fig = px.bar(long_format, x='class', y='count', color='image', barmode='group')
-        fig.update_layout(title='Class Counts for Each Image', xaxis_title='Class', yaxis_title='Count')
+        fig.update_layout(title='统计类别', xaxis_title='类别', yaxis_title='数量')
     else:
         # 如果image总数的种类大于3，则统计所有图像的每个class总数为纵坐标
         fig = px.bar(x=class_counts.index, y=class_counts.values)
-        fig.update_layout(title='Total Class Counts', xaxis_title='Class', yaxis_title='Total Count')
+        fig.update_layout(title='统计类别', xaxis_title='类别', yaxis_title='数量')
 
     return fig
 
@@ -200,19 +179,17 @@ if __name__ == '__main__':
             len(source2)), format_func=lambda x: source2[x])
         if source2_index==0:
             fig=accurary()
-            # 展示 accuracy_chart.html
-            ## st.markdown("## Accuracy Chart")
-            ## st.markdown("<iframe src='accuracy_chart.html' width='1000' height='600'></iframe>", unsafe_allow_html=True)
             st.plotly_chart(fig)
         elif source2_index==1:
             fig=loss()
             st.plotly_chart(fig)
-
         elif source2_index==2:
-            fig=mAP()
-            mAPl()
-            mAPs()
-            st.plotly_chart(fig)
+            fig1=mAP()
+            fig2=mAPl()
+            fig3=mAPs()
+            st.plotly_chart(fig1)
+            st.plotly_chart(fig2)
+            st.plotly_chart(fig3)
         else :
             fig=bijiao()
             st.write(fig,width=800, height=700)
@@ -228,8 +205,6 @@ if __name__ == '__main__':
                     st.image(str(Path(f'{get_detection_folder()}') / img))
         if st.button('统计类别'):
                 if st.session_state['is_detect']:
-                    # 读取保存的文本文件，获取类别信息
-                    #st.write('11111111111111111')
                     fig1=countcls()
                     st.plotly_chart(fig1)
             #st.balloons()
