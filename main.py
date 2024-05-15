@@ -186,11 +186,11 @@ if __name__ == '__main__':
             # 添加导出按钮
             if st.button('导出'):
                 # 将图表导出为图片
-                pio.write_image(fig, 'images/chart.png')
+                pio.write_image(fig, 'chart.png')
                 st.success("图表已导出为图片：chart.png")
             # 添加下载按钮
             if os.path.exists("chart.png"):
-                st.download_button(label="点击此处下载图片", data=open("images/chart.png", "rb"), file_name="accuracy.png",
+                st.download_button(label="点击此处下载图片", data=open("chart.png", "rb"), file_name="accuracy.png",
                                    mime="image/png")
         elif source2_index==1:
             fig=loss()
