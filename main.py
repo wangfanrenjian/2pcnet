@@ -12,6 +12,7 @@ from draw import create_line_chart
 import plotly.graph_objects as go
 from draw import create_comparison_table
 import plotly.express as px
+import plotly.io as pio
 
 
 def get_subdirs(b='.'):
@@ -37,6 +38,7 @@ def accurary():
     accuracy_data = read_data(accuracy_file)
     accuracy_chart = create_line_chart(accuracy_data['Iteration'], [accuracy_data['Accuracy']],
                                        "准确率变化曲线", "Iteration", "Accuracy")
+
     return accuracy_chart
 def loss():
     accuracy_file = "metrics.xlsx"
@@ -180,14 +182,15 @@ if __name__ == '__main__':
         if source2_index==0:
             fig=accurary()
             st.plotly_chart(fig)
+            
             # 添加导出按钮
             if st.button('导出'):
                 # 将图表导出为图片
-                fig.write_image("accuracy.png", width=800, height=600)
-                st.success("图表已导出为图片：accuracy.png")
+                pio.write_image(fig, 'images/figure.svg')
+                st.success("图表已导出为图片：chart.png")
             # 添加下载按钮
-            if os.path.exists("accuracy.png"):
-                st.download_button(label="点击此处下载图片", data=open("accuracy.png", "rb"), file_name="准确率.png",
+            if os.path.exists("chart.png"):
+                st.download_button(label="点击此处下载图片", data=open("chart.png", "rb"), file_name="accuracy.png",
                                    mime="image/png")
         elif source2_index==1:
             fig=loss()
