@@ -85,15 +85,15 @@ def bijiao():
 def countcls():
     df = read_data('class.xlsx')
     # 统计每个class的总数
-    class_counts = df['class'].value_counts()
+    class_counts = df['class1'].value_counts()
     # 统计不同image种类数量
-    image_counts = df['image'].nunique()
+    image_counts = df['image1'].nunique()
     if image_counts <= 3:
         # 如果image总数的种类小于等于3，则以每个图像的每个class总数为纵坐标
-        grouped_data = df.groupby(['class', 'image']).size().unstack(fill_value=0)
-        long_format = grouped_data.reset_index().melt(id_vars='class', var_name='image', value_name='count')
+        grouped_data = df.groupby(['class1', 'image1']).size().unstack(fill_value=0)
+        long_format = grouped_data.reset_index().melt(id_vars='class1', var_name='image1', value_name='count')
         # 使用Plotly绘制柱状图
-        fig = px.bar(long_format, x='class', y='count', color='image', barmode='group')
+        fig = px.bar(long_format, x='class1', y='count', color='image1', barmode='group')
         fig.update_layout(title='统计类别', xaxis_title='类别', yaxis_title='数量')
     else:
         # 如果image总数的种类大于3，则统计所有图像的每个class总数为纵坐标
@@ -180,6 +180,15 @@ if __name__ == '__main__':
         if source2_index==0:
             fig=accurary()
             st.plotly_chart(fig)
+            # 添加导出按钮
+            if st.button('导出'):
+                # 将图表导出为图片
+                fig.write_image("准确率.png", width=800, height=600)
+                st.success("图表已导出为图片：准确率.png")
+            # 添加下载按钮
+            if os.path.exists("准确率.png"):
+                st.download_button(label="点击此处下载图片", data=open("chart.png", "rb"), file_name="chart.png",
+                                   mime="image/png")
         elif source2_index==1:
             fig=loss()
             st.plotly_chart(fig)
