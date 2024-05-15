@@ -87,13 +87,13 @@ def bijiao():
 def countcls():
     df = read_data('class.xlsx')
     # 统计每个class的总数
-    class_counts = df['class2'].value_counts()
+    class_counts = df['class3'].value_counts()
     # 统计不同image种类数量
-    image_counts = df['image2'].nunique()
+    image_counts = df['image3'].nunique()
     if image_counts <= 3:
         # 如果image总数的种类小于等于3，则以每个图像的每个class总数为纵坐标
-        grouped_data = df.groupby(['class2', 'image2']).size().unstack(fill_value=0)
-        long_format = grouped_data.reset_index().melt(id_vars='class2', var_name='image2', value_name='count')
+        grouped_data = df.groupby(['class3', 'image3']).size().unstack(fill_value=0)
+        long_format = grouped_data.reset_index().melt(id_vars='class3', var_name='image2', value_name='count')
         # 使用Plotly绘制柱状图
         fig = px.bar(long_format, x='class2', y='count', color='image2', barmode='group')
         fig.update_layout(title='统计类别', xaxis_title='类别', yaxis_title='数量')
