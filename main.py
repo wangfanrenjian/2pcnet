@@ -194,7 +194,8 @@ if __name__ == '__main__':
                                    mime="image/png")
             if st.button('导出2'):
                 # 将图表导出为图片
-                st.download_button(label="点击此处下载图片", data=fig,
+                img_data = pio.to_image(fig, format="png")
+                st.download_button(label="点击此处下载图片", data=img_data,
                                    file_name="accuracy.png",
                                    mime="image/png")
 
