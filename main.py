@@ -222,10 +222,11 @@ if __name__ == '__main__':
             fig=bijiao()
             # st.write(fig,width=800, height=700)
             # 将 DataFrame 转换为 HTML 表格，并设置样式
-            html_table = fig.style.applymap(
+            styled_df = fig.style.applymap(
                 lambda x: f'color: {"red" if isinstance(x, str) else "blue"}; font-size: 16px')
-            # 显示 HTML 表格
-            st.write(html_table.render())
+
+            # 显示 DataFrame
+            st.write(styled_df, unsafe_allow_html=True)
     st.session_state.setdefault('is_detect',False)
     if is_valid:
         print('valid')
