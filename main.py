@@ -87,15 +87,15 @@ def bijiao():
 def countcls():
     df = read_data('class.xlsx')
     # 统计每个class的总数
-    class_counts = df['class1'].value_counts()
+    class_counts = df['class2'].value_counts()
     # 统计不同image种类数量
-    image_counts = df['image1'].nunique()
+    image_counts = df['image2'].nunique()
     if image_counts <= 3:
         # 如果image总数的种类小于等于3，则以每个图像的每个class总数为纵坐标
-        grouped_data = df.groupby(['class1', 'image1']).size().unstack(fill_value=0)
-        long_format = grouped_data.reset_index().melt(id_vars='class1', var_name='image1', value_name='count')
+        grouped_data = df.groupby(['class2', 'image2']).size().unstack(fill_value=0)
+        long_format = grouped_data.reset_index().melt(id_vars='class2', var_name='image2', value_name='count')
         # 使用Plotly绘制柱状图
-        fig = px.bar(long_format, x='class1', y='count', color='image1', barmode='group')
+        fig = px.bar(long_format, x='class2', y='count', color='image2', barmode='group')
         fig.update_layout(title='统计类别', xaxis_title='类别', yaxis_title='数量')
     else:
         # 如果image总数的种类大于3，则统计所有图像的每个class总数为纵坐标
@@ -224,7 +224,7 @@ if __name__ == '__main__':
             # 将 DataFrame 转换为 HTML 表格，并设置样式
             # styled_df = fig.style.applymap(
             #     lambda x: f'color: {"black" if isinstance(x, str) else "blue"}; font-weight: {"bold" if isinstance(x, str) else "normal"}; font-size: 20px')
-            # 
+            #
             # # 显示 DataFrame
             # st.write(styled_df, unsafe_allow_html=True)
     st.session_state.setdefault('is_detect',False)
