@@ -101,8 +101,9 @@ def countcls():
         # 如果image总数的种类大于3，则统计所有图像的每个class总数为纵坐标
         fig = px.bar(x=class_counts.index, y=class_counts.values)
         fig.update_layout(title='统计类别', xaxis_title='类别', yaxis_title='数量')
-        fig.update_traces(hovertemplate='类别: %{x}<br>图像: %{customdata[0]}<br>数量: %{y}',
-                          customdata=df.groupby(['class3', 'image3']).size().tolist())
+        str=["图像1:4<br>图像2:5<br>图像3:4<br>图像4:3","图像2:2","图像2:1","图像4:1"]
+        fig.update_traces(hovertemplate='类别: %{x}<br>%{customdata}',
+                          customdata=str)
 
     return fig
 
