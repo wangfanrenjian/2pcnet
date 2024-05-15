@@ -183,11 +183,11 @@ if __name__ == '__main__':
             # 添加导出按钮
             if st.button('导出'):
                 # 将图表导出为图片
-                fig.write_image("准确率.png", width=800, height=600)
-                st.success("图表已导出为图片：准确率.png")
+                fig.write_image("accuracy.png", width=800, height=600)
+                st.success("图表已导出为图片：accuracy.png")
             # 添加下载按钮
-            if os.path.exists("准确率.png"):
-                st.download_button(label="点击此处下载图片", data=open("chart.png", "rb"), file_name="chart.png",
+            if os.path.exists("accuracy.png"):
+                st.download_button(label="点击此处下载图片", data=open("accuracy.png", "rb"), file_name="准确率.png",
                                    mime="image/png")
         elif source2_index==1:
             fig=loss()
