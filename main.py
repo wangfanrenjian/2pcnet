@@ -204,17 +204,17 @@ if __name__ == '__main__':
             fig2=mAPl()
             fig3=mAPs()
             st.plotly_chart(fig1)
-            if st.button('导出'):
+            if st.button('导出mAP曲线'):
                 # 将图表导出为图片
                 pio.write_image(fig1, 'data/images/chart.png')
                 st.success("图表已导出为图片：chart.png")
             st.plotly_chart(fig2)
-            if st.button('导出'):
+            if st.button('导出mAPl曲线'):
                 # 将图表导出为图片
                 pio.write_image(fig1, 'data/images/chart.png')
                 st.success("图表已导出为图片：chart.png")
             st.plotly_chart(fig3)
-            if st.button('导出'):
+            if st.button('导出mAPs曲线'):
                 # 将图表导出为图片
                 pio.write_image(fig1, 'data/images/chart.png')
                 st.success("图表已导出为图片：chart.png")
