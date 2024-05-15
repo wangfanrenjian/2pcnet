@@ -19,6 +19,7 @@ patsy==0.5.6
 plotly_express==0.4.1 
 scipy==1.13.0
 statsmodels==0.14.2
+kaleido
 # logging -------------------------------------
 tensorboard>=2.4.1
 # wandb
