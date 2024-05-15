@@ -192,23 +192,32 @@ if __name__ == '__main__':
             if os.path.exists("data/images/chart.png"):
                 st.download_button(label="点击此处下载图片", data=open("data/images/chart.png", "rb"), file_name="accuracy.png",
                                    mime="image/png")
-            if st.button('导出2'):
-                # 将图表导出为图片
-                img_data = pio.to_image(fig, format="jpg")
-                st.download_button(label="点击此处下载图片", data=img_data,
-                                   file_name="accuracy.jpg",
-                                   mime="image/png")
-
         elif source2_index==1:
             fig=loss()
             st.plotly_chart(fig)
+            if st.button('导出'):
+                # 将图表导出为图片
+                pio.write_image(fig, 'data/images/chart.png')
+                st.success("图表已导出为图片：chart.png")
         elif source2_index==2:
             fig1=mAP()
             fig2=mAPl()
             fig3=mAPs()
             st.plotly_chart(fig1)
+            if st.button('导出'):
+                # 将图表导出为图片
+                pio.write_image(fig1, 'data/images/chart.png')
+                st.success("图表已导出为图片：chart.png")
             st.plotly_chart(fig2)
+            if st.button('导出'):
+                # 将图表导出为图片
+                pio.write_image(fig1, 'data/images/chart.png')
+                st.success("图表已导出为图片：chart.png")
             st.plotly_chart(fig3)
+            if st.button('导出'):
+                # 将图表导出为图片
+                pio.write_image(fig1, 'data/images/chart.png')
+                st.success("图表已导出为图片：chart.png")
         else :
             fig=bijiao()
             st.write(fig,width=800, height=700)
@@ -226,6 +235,10 @@ if __name__ == '__main__':
                 if st.session_state['is_detect']:
                     fig1=countcls()
                     st.plotly_chart(fig1)
+                    if st.button('导出'):
+                        # 将图表导出为图片
+                        pio.write_image(fig1, 'data/images/chart.png')
+                        st.success("图表已导出为图片：chart.png")
             #st.balloons()
     else:
         pass
