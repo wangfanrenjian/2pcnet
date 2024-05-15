@@ -1,7 +1,5 @@
 from io import StringIO
 from pathlib import Path
-
-import pandas as pd
 import streamlit as st
 import time
 from detect import detect
@@ -224,18 +222,8 @@ if __name__ == '__main__':
             fig=bijiao()
             # st.write(fig,width=800, height=700)
             # 将 DataFrame 转换为 HTML 表格，并设置样式
-            # 设置样式
             styled_df = fig.style.applymap(
-                lambda x: f'color: {"blue" if not isinstance(x, str) else "black"}; font-size: 16px',
-                # 设置非字符串为蓝色字体，字号16px
-                subset=pd.IndexSlice[:, ['B', 'C']]  # 设置 B 列和 C 列的样式
-            ).applymap(
-                lambda x: 'color: black; font-weight: bold; font-size: 25px',  # 设置表头为黑色字体加粗，字号25px
-                subset=pd.IndexSlice[0, :]  # 设置第一行的样式
-            ).applymap(
-                lambda x: 'color: black; font-weight: bold; font-size: 20px',  # 设置第一列的样式
-                subset=pd.IndexSlice[:, ['A']]  # 设置 A 列的样式
-            ).format('{:.1f}', subset=pd.IndexSlice[:, ['B', 'C']])  # 设置 B 列和 C 列数字小数点后保留一位
+                lambda x: f'color: {"black" if isinstance(x, str) else "blue"}; font-weight: {"bold" if isinstance(x, str) else "normal"}; font-size: 20px')
 
             # 显示 DataFrame
             st.write(styled_df, unsafe_allow_html=True)
