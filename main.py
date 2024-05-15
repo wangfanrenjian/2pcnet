@@ -220,13 +220,13 @@ if __name__ == '__main__':
                 st.success("图表已导出为图片：chart.png")
         else :
             fig=bijiao()
-            # st.write(fig,width=800, height=700)
+            st.write(fig,width=800, height=700)
             # 将 DataFrame 转换为 HTML 表格，并设置样式
-            styled_df = fig.style.applymap(
-                lambda x: f'color: {"black" if isinstance(x, str) else "blue"}; font-weight: {"bold" if isinstance(x, str) else "normal"}; font-size: 20px')
-
-            # 显示 DataFrame
-            st.write(styled_df, unsafe_allow_html=True)
+            # styled_df = fig.style.applymap(
+            #     lambda x: f'color: {"black" if isinstance(x, str) else "blue"}; font-weight: {"bold" if isinstance(x, str) else "normal"}; font-size: 20px')
+            # 
+            # # 显示 DataFrame
+            # st.write(styled_df, unsafe_allow_html=True)
     st.session_state.setdefault('is_detect',False)
     if is_valid:
         print('valid')
