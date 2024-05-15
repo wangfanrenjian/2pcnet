@@ -220,7 +220,7 @@ if __name__ == '__main__':
                 st.success("图表已导出为图片：chart.png")
         else :
             fig=bijiao()
-            st.write(fig,width=800, height=700)
+            st.dataframe(fig,width=800, height=700)
     st.session_state.setdefault('is_detect',False)
     if is_valid:
         print('valid')
