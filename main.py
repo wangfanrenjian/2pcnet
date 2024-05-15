@@ -225,7 +225,7 @@ if __name__ == '__main__':
             html_table = fig.style.applymap(
                 lambda x: f'color: {"red" if isinstance(x, str) else "blue"}; font-size: 16px')
             # 显示 HTML 表格
-            st.write(html_table.render(), unsafe_allow_html=True)
+            st.write(html_table.render())
     st.session_state.setdefault('is_detect',False)
     if is_valid:
         print('valid')
